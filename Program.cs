@@ -22,4 +22,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+taskman_rest_dotnet.Mock.MockDataInit.Run();
+
 app.Run();

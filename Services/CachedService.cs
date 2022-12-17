@@ -2,39 +2,52 @@ namespace taskman_rest_dotnet.Services;
 
 using Models;
 
-public abstract class CachedService<T> where T : BaseModel
+public abstract class CachedService<T, SELF> : ICachedService<T>
+    where T : BaseModel
+    where SELF : CachedService<T, SELF>, ICachedService<T>, new()
 {
-    private static Dictionary<long, T> Cache { get; }
+    protected Dictionary<long, T> Cache { get; }
 
     private static long NextId = 1;
 
-    static CachedService()
+    private static readonly SELF instance;
+    public static SELF Instance
+    {
+        get { return instance; }
+    }
+
+    protected CachedService()
     {
         Cache = new Dictionary<long, T>();
     }
 
-    public static Dictionary<long, T> GetAll() => Cache;
+    static CachedService()
+    {
+        instance = new SELF();
+    }
 
-    public static T? Get(long id) => Cache.TryGetValue(id, out T? obj) ? obj : null;
+    public Dictionary<long, T> GetAll() => Instance.Cache;
 
-    public static void Add(T obj)
+    public T? Get(long id) => Instance.Cache.TryGetValue(id, out T? obj) ? obj : null;
+
+    public void Add(T obj)
     {
         obj.Id = NextId++;
-        Cache.Add(obj.Id, obj);
+        Instance.Cache.Add(obj.Id, obj);
     }
 
-    public static void Delete(long id)
+    public void Delete(long id)
     {
-        Cache.Remove(id);
+        Instance.Cache.Remove(id);
     }
 
-    public static void Update(T obj)
+    public void Update(T obj)
     {
-        if (!Cache.ContainsKey(obj.Id))
+        if (!Instance.Cache.ContainsKey(obj.Id))
         {
             Add(obj);
             return;
         }
-        Cache[obj.Id] = obj;
+        Instance.Cache[obj.Id] = obj;
     }
 }

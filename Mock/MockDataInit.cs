@@ -7,10 +7,13 @@ static class MockDataInit
 {
     public static void Run()
     {
+        UserService users = UserService.Instance;
+        TaskService tasks = TaskService.Instance;
+
         User john =
             new(firstName: "John", lastName: "Doe", email: "johndoe@gmail.com", username: "johnd");
-        UserService.Add(john);
-        TaskService.Add(
+        users.Add(john);
+        tasks.Add(
             new Models.Task(
                 title: "John's Project",
                 description: "Learn to boil water",
@@ -19,8 +22,8 @@ static class MockDataInit
         );
         User jane =
             new(firstName: "Jane", lastName: "Doe", email: "janedoe@gmail.com", username: "janed");
-        UserService.Add(jane);
-        TaskService.Add(
+        users.Add(jane);
+        tasks.Add(
             new Models.Task(
                 title: "Jane's Project",
                 description: "Conquer the world",

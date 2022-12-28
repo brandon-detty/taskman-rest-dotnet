@@ -8,6 +8,6 @@ namespace taskman_rest_dotnet.Controllers;
 [Route("[controller]")]
 public class TodoController : BaseController<Todo>
 {
-    public TodoController(ILogger<TodoController> logger, ICachedService<Todo> service)
-        : base(logger, service) { }
+    public TodoController(ILogger<TodoController> logger, ICachedService repo) : base(logger, repo)
+    { }
 }

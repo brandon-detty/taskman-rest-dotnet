@@ -2,15 +2,15 @@ namespace taskman_rest_dotnet.Services;
 
 using Models;
 
-public interface ICachedService<T> where T : BaseModel
+public interface ICachedService
 {
-    Dictionary<long, T> GetAll();
+    Dictionary<long, T> GetAll<T>() where T : BaseModel;
 
-    T? Get(long id);
+    T? Get<T>(long id) where T : BaseModel;
 
-    void Add(T obj);
+    void Add<T>(T obj) where T : BaseModel;
 
-    void Delete(long id);
+    void Delete<T>(long id) where T : BaseModel;
 
-    void Update(T obj);
+    void Update<T>(T obj) where T : BaseModel;
 }

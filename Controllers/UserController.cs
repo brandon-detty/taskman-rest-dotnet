@@ -8,6 +8,6 @@ namespace taskman_rest_dotnet.Controllers;
 [Route("[controller]")]
 public class UserController : BaseController<User>
 {
-    public UserController(ILogger<UserController> logger, ICachedService<User> service)
-        : base(logger, service) { }
+    public UserController(ILogger<UserController> logger, ICachedService repo) : base(logger, repo)
+    { }
 }

@@ -10,22 +10,21 @@ public class BaseController<T> : ControllerBase where T : BaseModel
 {
     protected readonly ILogger<BaseController<T>> _logger;
 
-    protected ICachedService<T> Service;
+    protected ICachedService repo;
 
-    public BaseController(ILogger<BaseController<T>> logger, ICachedService<T> service)
+    public BaseController(ILogger<BaseController<T>> logger, ICachedService repo)
     {
         _logger = logger;
-        Service = service;
+        this.repo = repo;
     }
 
     [HttpGet]
-    // public ActionResult<ICollection<BaseModel>> GetAll() => Service.GetAll().Values;
-    public Dictionary<long, T>.ValueCollection GetAll() => Service.GetAll().Values;
+    public ActionResult<Dictionary<long, T>> GetAll() => repo.GetAll<T>();
 
     [HttpGet("{id}")]
     public ActionResult<BaseModel> Get(long id)
     {
-        var res = Service.Get(id);
+        var res = repo.Get<T>(id);
 
         if (res == null)
         {

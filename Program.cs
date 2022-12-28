@@ -1,6 +1,13 @@
+using taskman_rest_dotnet.Mock;
+using taskman_rest_dotnet.Models;
+using taskman_rest_dotnet.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<ICachedService<User>, CachedService<User>>();
+builder.Services.AddSingleton<ICachedService<Todo>, CachedService<Todo>>();
+builder.Services.AddSingleton<ICachedService<TodoNote>, CachedService<TodoNote>>();
 
 IMvcBuilder mvcBuilder = builder.Services.AddControllers();
 
@@ -23,6 +30,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    MockDataInit.Run(app.Services);
 }
 
 app.UseHttpsRedirection();
@@ -30,7 +39,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-taskman_rest_dotnet.Mock.MockDataInit.Run();
 
 app.Run();

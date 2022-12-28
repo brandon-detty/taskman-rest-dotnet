@@ -5,10 +5,10 @@ namespace taskman_rest_dotnet.Mock;
 
 static class MockDataInit
 {
-    public static void Run()
+    public static void Run(IServiceProvider services)
     {
-        UserService users = UserService.Instance;
-        TodoService todos = TodoService.Instance;
+        var users = services.GetService<ICachedService<User>>();
+        var todos = services.GetService<ICachedService<Todo>>();
 
         User john =
             new(firstName: "John", lastName: "Doe", email: "johndoe@gmail.com", username: "johnd");

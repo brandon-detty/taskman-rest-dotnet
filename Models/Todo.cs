@@ -1,6 +1,6 @@
 namespace taskman_rest_dotnet.Models;
 
-public class Task : BaseModel
+public class Todo : BaseModel
 {
     public string Title { get; set; }
 
@@ -16,7 +16,7 @@ public class Task : BaseModel
 
     public long UserId { get; set; }
 
-    public Task(
+    public Todo(
         string title,
         string description,
         long userId,

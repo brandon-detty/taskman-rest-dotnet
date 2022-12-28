@@ -1,10 +1,10 @@
 namespace taskman_rest_dotnet.Models;
 
-public class TaskProgress : BaseModel
+public class TodoNote : BaseModel
 {
-    public long TaskId { get; set; }
+    public long TodoId { get; set; }
 
-    public Task? Task { get; set; }
+    public Todo? Todo { get; set; }
 
     public User? User { get; set; }
 
@@ -16,9 +16,9 @@ public class TaskProgress : BaseModel
 
     public string? Memo { get; set; }
 
-    public TaskProgress(long taskId)
+    public TodoNote(long todoId)
     {
-        TaskId = taskId;
+        TodoId = todoId;
 
         Created = DateTime.Now;
     }
